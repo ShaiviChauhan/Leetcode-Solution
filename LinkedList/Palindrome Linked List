@@ -1,41 +1,50 @@
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        
-        ListNode fast= head;
-        ListNode slow= head;
-        
-        
-         while(fast.next !=null && fast.next.next!=null){
-            slow= slow.next;
-            fast= fast.next.next;
-        }
-        
-        if(fast!=null) 
-            slow = slow.next;
-        
-        ListNode revHead = reverse(slow);
-        
-        while(revHead!=null){
-            if(revHead.val!=head.val)
-                return false;
-          else{  
-            revHead=revHead.next;
-            head=head.next;
-          }
-        }
-        return true;
-    }
-    
-    public ListNode reverse(ListNode head){
+    public ListNode reverse(ListNode head) // reverse karne ke liye ham 3 pointer approach krte the
+    {
         ListNode prev=null;
-        while(head!=null){
-            ListNode next =head.next;
-            head.next =prev;
-            prev=head;
-            head=next;
+        ListNode curr=head;
         
-    }
+        while(curr!=null){
+            ListNode next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
         
         return prev;
+    }
+    
+    public ListNode findMiddle(ListNode head){
+        ListNode hare= head;
+        ListNode turtle=head;
+        
+        while(hare.next!= null && hare.next.next!=null){
+            hare=hare.next.next;
+            turtle=turtle.next;
+        }
+        
+        return turtle;
+    }
+    public boolean isPalindrome(ListNode head) {
+        if(head==null||head.next==null){
+            return true;
+            
+        }
+        
+        ListNode middle=findMiddle(head); //this will help us to find the  1st half ka end
+        ListNode secondHalfStart =reverse(middle.next); //second half ke start se(mtlb middle.next se) reverse kr dega ye list ko
+        
+        //comparison-2 values krenge ham compare
+        
+        ListNode firstHalfStart= head;
+        while(secondHalfStart!=null){
+            if(firstHalfStart.val!=secondHalfStart.val){
+                return false;
+            }
+            
+            firstHalfStart=firstHalfStart.next;
+            secondHalfStart=secondHalfStart.next;
+        }
+        return true;
     }
 }

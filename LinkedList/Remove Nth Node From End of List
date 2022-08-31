@@ -1,0 +1,31 @@
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head.next==null){
+            return null;
+        }
+        
+        //calculating the size of LL
+        int size=0;
+        ListNode curr= head;
+        while(curr!=null){
+            curr=curr.next;
+            size++;
+        }
+        
+        // if we have to dlt the element which is equal to the size
+        if(n==size){
+            return head.next;
+        }
+        
+        //finding out the previous node(mtlb last se jo nth node thi, usse previous node ko nikala) of deletion node
+        int indexToSearch=size-n;
+         ListNode prev=head;
+        int i=1;
+        while(i<indexToSearch){
+        prev=prev.next; //finally jo current hoga vo, vo vala node hoga jaha se hame connection ko break krna hai
+        i++;
+        }
+         prev.next=prev.next.next; //previous ki help se jo nth node thi usko beech se kaat diya and then we returned head
+        return head;
+    }
+}
